@@ -31,14 +31,21 @@ def is_v9():
 def is_greater_v8():
     return get_version() >= 7.99
 
+def is_greater_v9():
+    return get_version() >= 9.99
+
 def footprint_has_field(footprint, field_name):
-    if is_greater_v8():
+    if is_greater_v9():
+        return footprint.HasField(field_name)
+    elif is_greater_v8():
         return footprint.HasFieldByName(field_name)
     else:
         return footprint.HasProperty(field_name)
 
 def footprint_get_field(footprint, field_name):
-    if is_greater_v8():
+    if is_greater_v9():
+        return footprint.GetField(field_name)
+    elif is_greater_v8():
         return footprint.GetFieldByName(field_name).GetText()
     else:
         return footprint.GetProperty(field_name)
@@ -108,3 +115,4 @@ def get_is_dnp_from_footprint(f):
 
 def debug_show_object(obj):
     wx.MessageBox(json.dumps(obj))
+
